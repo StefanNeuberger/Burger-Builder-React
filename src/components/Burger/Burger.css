@@ -5,6 +5,11 @@
     text-align: center;
     font-weight: bold;
     font-size: 1.2rem;
+    overflow: scroll;
+}
+
+::-webkit-scrollbar {
+    display: none;
 }
 
 @media (min-width: 500px) and (min-height: 400px) {
@@ -25,5 +30,22 @@
     .Burger {
         width: 700px;
         height: 600px;
+    }
+}
+
+.fadeInOut {
+    animation-duration: 2s;
+    animation-name: fade-in-out;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+@keyframes fade-in-out {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
     }
 }
