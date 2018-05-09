@@ -49,9 +49,3 @@
         opacity: 1;
     }
 }
-
-.purchasing {
-    opacity: 0.7;
-    filter: blur(2px);
-}
-
