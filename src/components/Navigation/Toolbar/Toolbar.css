@@ -13,6 +13,31 @@
     z-index: 90;
 }
 
+.box {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.logoBox {
+    height: 80%;
+    max-width: 100px;
+}
+
 .Toolbar nav {
     height: 100%;
+    margin-left: auto;
+}
+
+.left {
+    margin-right: auto;
+}
+
+@media (max-width: 516px) {
+    .DesktopOnly {
+        display: none;
+    }
 }
