@@ -50,7 +50,16 @@ class BurgerBuilder extends Component {
         })
     };
 
-    // purchaseContinueHandler = () => {
+    purchaseContinueHandler = () => {
+        const queryParams = [];
+        for (let ingredient in this.state.ingredients) {
+            queryParams.push(encodeURIComponent(ingredient) + '=' + encodeURIComponent(this.state.ingredients[ingredient]));
+        }
+        const queryString = queryParams.join('&');
+        this.props.history.push({
+            pathname: '/checkout',
+            search: '?' + queryString
+        })
     //     this.setState({loading: true});
     //     const date = dateFormat(new Date(), 'isoDateTime');
     //     const order = {
@@ -75,7 +84,7 @@ class BurgerBuilder extends Component {
     //         .catch(error => {
     //             this.setState({loading: false, purchasing: false})
     //         });
-    // };
+    };
 
     updatePurchaseState = (ingredients) => {
         const sum = Object.values(ingredients).reduce((acc, next) => acc + next);
@@ -123,8 +132,7 @@ class BurgerBuilder extends Component {
             burger = (
                 <Aux>
                     <Burger
-                        ingredients={this.state.ingredients}
-                        purchasing={this.state.purchasing}/>
+                        ingredients={this.state.ingredients}/>
                     <BuildControls
                         addedIngredient={this.addIngredientHandler}
                         removedIngredient={this.removeIngredientHandler}
@@ -132,7 +140,6 @@ class BurgerBuilder extends Component {
                         price={this.state.totalPrice}
                         purchasable={this.state.purchasable}
                         ordering={this.purchaseHandler}
-                        purchasing={this.state.purchasing}
                     />
                 </Aux>
             );
@@ -140,7 +147,7 @@ class BurgerBuilder extends Component {
                 ingredients={this.state.ingredients}
                 price={this.state.totalPrice.toFixed(2)}
                 purchaseCancel={this.purchaseCancelHandler}
-                // purchaseContinue={this.purchaseContinueHandler}
+                purchaseContinue={this.purchaseContinueHandler}
             />;
         }
 

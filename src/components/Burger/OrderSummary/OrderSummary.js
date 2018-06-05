@@ -5,10 +5,6 @@ import Button from '../../UI/Button/Button';
 
 class OrderSummary extends Component {
 
-    continuePurchaseHandler = () => {
-        this.props.history.push('/checkout');
-    };
-
     render() {
 
         const ingredientSummary = Object.keys(this.props.ingredients).map((ingredient, index) => {
@@ -30,36 +26,10 @@ class OrderSummary extends Component {
                 <p><strong>Total Price: {this.props.price}</strong></p>
                 <p>Continue to Checkout?</p>
                 <Button clicked={this.props.purchaseCancel} btnType={'Danger'}>CANCEL</Button>
-                <Button clicked={this.continuePurchaseHandler} btnType={'Success'}>CONTINUE</Button>
-                {/*<Button clicked={this.props.purchaseContinue} btnType={'Success'}>CONTINUE</Button>*/}
+                <Button clicked={this.props.purchaseContinue} btnType={'Success'}>CONTINUE</Button>
             </Aux>
         )
     }
 }
 
 export default withRouter(OrderSummary);
-// export default OrderSummary;
-
-// const orderSummary = (props) => {
-//     const ingredientSummary = Object.keys(props.ingredients).map((ingredient, index) => {
-//        return (
-//            <li key={ingredient + index}><span style={{textTransform: 'capitalize'}}>{ingredient}:</span> {props.ingredients[ingredient]}</li>
-//        )
-//     });
-//
-//     return (
-//         <Aux>
-//             <h3>Your Order</h3>
-//             <p>A delicious burger with following ingredients:</p>
-//             <ul>
-//                 {ingredientSummary}
-//             </ul>
-//             <p><strong>Total Price: {props.price}</strong></p>
-//             <p>Continue to Checkout?</p>
-//             <Button clicked={props.purchaseCancel} btnType={'Danger'}>CANCEL</Button>
-//             <Button clicked={props.purchaseContinue} btnType={'Success'}>CONTINUE</Button>
-//         </Aux>
-//     )
-// };
-//
-// export default orderSummary;
