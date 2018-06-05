@@ -1,8 +1,13 @@
 import React, {Component} from 'react';
+// import {withRouter} from 'react-router-dom';
 import Aux from '../../../hoc/Aux/Aux';
 import Button from '../../UI/Button/Button';
 
 class OrderSummary extends Component {
+
+    // continuePurchaseHandler = () => {
+    //     this.props.history.push('/checkout');
+    // };
 
     render() {
 
@@ -25,12 +30,14 @@ class OrderSummary extends Component {
                 <p><strong>Total Price: {this.props.price}</strong></p>
                 <p>Continue to Checkout?</p>
                 <Button clicked={this.props.purchaseCancel} btnType={'Danger'}>CANCEL</Button>
+                {/*<Button clicked={this.continuePurchaseHandler} btnType={'Success'}>CONTINUE</Button>*/}
                 <Button clicked={this.props.purchaseContinue} btnType={'Success'}>CONTINUE</Button>
             </Aux>
         )
     }
 }
 
+// export default withRouter(OrderSummary);
 export default OrderSummary;
 
 // const orderSummary = (props) => {
