@@ -1,5 +1,5 @@
 .BuildControls {
-    /*position: fixed;*/
+    /*position: absolute;*/
     width: 100%;
     background-color: #cf8f2e;
     display: flex;
@@ -10,6 +10,7 @@
     box-shadow: 0 2px 1px #ccc;
     /*bottom: 0;*/
     /*margin-bottom: 5px;*/
+    bottom: 0px;
 }
 
 .OrderButton {
