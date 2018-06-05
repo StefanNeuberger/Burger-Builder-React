@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import axios from '../../axios-orders';
 
-// import dateFormat from 'dateformat';
-
 import Aux from '../../hoc/Aux/Aux';
 import Burger from '../../components/Burger/Burger';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
@@ -55,35 +53,12 @@ class BurgerBuilder extends Component {
         for (let ingredient in this.state.ingredients) {
             queryParams.push(encodeURIComponent(ingredient) + '=' + encodeURIComponent(this.state.ingredients[ingredient]));
         }
+        queryParams.push('price=' + this.state.totalPrice);
         const queryString = queryParams.join('&');
         this.props.history.push({
             pathname: '/checkout',
             search: '?' + queryString
         })
-    //     this.setState({loading: true});
-    //     const date = dateFormat(new Date(), 'isoDateTime');
-    //     const order = {
-    //         ingredients: this.state.ingredients,
-    //         price: this.state.totalPrice,
-    //         customer: {
-    //             name: 'Stefan Neuberger',
-    //             address: {
-    //                 street: 'Teststreet 1',
-    //                 zipCode: '48587',
-    //                 country: 'Germany'
-    //             },
-    //             email: 'stef.neuberger@gmail.com'
-    //         },
-    //         deliveryMethod: 'fastest',
-    //         date: date
-    //     };
-    //     axios.post('/orders.json', order)
-    //         .then(response => {
-    //             this.setState({loading: false, purchasing: false})
-    //         })
-    //         .catch(error => {
-    //             this.setState({loading: false, purchasing: false})
-    //         });
     };
 
     updatePurchaseState = (ingredients) => {
