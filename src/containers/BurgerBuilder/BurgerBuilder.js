@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import axios from '../../axios-orders';
 
-import dateFormat from 'dateformat';
+// import dateFormat from 'dateformat';
 
 import Aux from '../../hoc/Aux/Aux';
 import Burger from '../../components/Burger/Burger';
@@ -50,32 +50,32 @@ class BurgerBuilder extends Component {
         })
     };
 
-    purchaseContinueHandler = () => {
-        this.setState({loading: true});
-        const date = dateFormat(new Date(), 'isoDateTime');
-        const order = {
-            ingredients: this.state.ingredients,
-            price: this.state.totalPrice,
-            customer: {
-                name: 'Stefan Neuberger',
-                address: {
-                    street: 'Teststreet 1',
-                    zipCode: '48587',
-                    country: 'Germany'
-                },
-                email: 'stef.neuberger@gmail.com'
-            },
-            deliveryMethod: 'fastest',
-            date: date
-        };
-        axios.post('/orders.json', order)
-            .then(response => {
-                this.setState({loading: false, purchasing: false})
-            })
-            .catch(error => {
-                this.setState({loading: false, purchasing: false})
-            });
-    };
+    // purchaseContinueHandler = () => {
+    //     this.setState({loading: true});
+    //     const date = dateFormat(new Date(), 'isoDateTime');
+    //     const order = {
+    //         ingredients: this.state.ingredients,
+    //         price: this.state.totalPrice,
+    //         customer: {
+    //             name: 'Stefan Neuberger',
+    //             address: {
+    //                 street: 'Teststreet 1',
+    //                 zipCode: '48587',
+    //                 country: 'Germany'
+    //             },
+    //             email: 'stef.neuberger@gmail.com'
+    //         },
+    //         deliveryMethod: 'fastest',
+    //         date: date
+    //     };
+    //     axios.post('/orders.json', order)
+    //         .then(response => {
+    //             this.setState({loading: false, purchasing: false})
+    //         })
+    //         .catch(error => {
+    //             this.setState({loading: false, purchasing: false})
+    //         });
+    // };
 
     updatePurchaseState = (ingredients) => {
         const sum = Object.values(ingredients).reduce((acc, next) => acc + next);
@@ -140,7 +140,7 @@ class BurgerBuilder extends Component {
                 ingredients={this.state.ingredients}
                 price={this.state.totalPrice.toFixed(2)}
                 purchaseCancel={this.purchaseCancelHandler}
-                purchaseContinue={this.purchaseContinueHandler}
+                // purchaseContinue={this.purchaseContinueHandler}
             />;
         }
 

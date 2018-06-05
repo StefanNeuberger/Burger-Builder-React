@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSummary';
 import dateFormat from "dateformat";
 import axios from "../../axios-orders";
+import {withRouter} from 'react-router-dom';
 
 class checkout extends Component {
 
@@ -13,6 +14,10 @@ class checkout extends Component {
             meat: 1
         },
         loading: false
+    };
+
+    purchaseCancelHandler = () => {
+        this.props.history.push('/');
     };
 
     purchaseContinueHandler = () => {
@@ -45,10 +50,10 @@ class checkout extends Component {
     render() {
         return (
             <div>
-                <CheckoutSummary ingredients={this.state.ingredients}/>
+                <CheckoutSummary ingredients={this.state.ingredients} cancel={this.purchaseCancelHandler}/>
             </div>
         )
     }
 }
 
-export default checkout;
+export default withRouter(checkout);

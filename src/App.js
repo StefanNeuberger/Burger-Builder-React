@@ -10,10 +10,10 @@ class App extends Component {
         return (
             <div className="App">
                 <Layout>
-                    {/*<Route path={'/'} exact component={BurgerBuilder}/>*/}
-                    <BurgerBuilder/>
-                    {/*<Route path={'/checkout'} component={Checkout}/>*/}
-                    <Checkout/>
+                    <Route path={'/'} exact component={BurgerBuilder}/>
+                    {/*<BurgerBuilder/>*/}
+                    <Route path={'/checkout'} component={Checkout}/>
+                    {/*<Checkout/>*/}
                 </Layout>
             </div>
         );
