@@ -16,7 +16,8 @@ class contactData extends Component {
             street: '',
             postalCode: ''
         },
-        loading: false
+        loading: false,
+        ordered: false
     };
 
     // event.preventDefault so that page does not get reloaded, which is default behaviour (sending request) of button inside form
@@ -24,52 +25,54 @@ class contactData extends Component {
         event.preventDefault();
         console.log(this.props);
 
-            this.setState({loading: true});
-            const date = dateFormat(new Date(), 'isoDateTime');
-            const order = {
-                ingredients: this.props.ingredients,
-                price: this.state.totalPrice,
-                customer: {
-                    name: 'Stefan Neuberger',
-                    address: {
-                        street: 'Teststreet 1',
-                        zipCode: '48587',
-                        country: 'Germany'
-                    },
-                    email: 'stef.neuberger@gmail.com'
+        this.setState({loading: true});
+        const date = dateFormat(new Date(), 'isoDateTime');
+        const order = {
+            ingredients: this.props.ingredients,
+            price: this.state.totalPrice,
+            customer: {
+                name: 'Stefan Neuberger',
+                address: {
+                    street: 'Teststreet 1',
+                    zipCode: '48587',
+                    country: 'Germany'
                 },
-                deliveryMethod: 'fastest',
-                date: date
-            };
-            axios.post('/orders.json', order)
-                .then(response => {
-                    this.setState({loading: false})
-                })
-                .catch(error => {
-                    this.setState({loading: false})
-                });
+                email: 'stef.neuberger@gmail.com'
+            },
+            deliveryMethod: 'fastest',
+            date: date
+        };
+        axios.post('/orders.json', order)
+            .then(response => {
+                this.setState({loading: false, ordered: true});
+                this.props.history.push('/');
+            })
+            .catch(error => {
+                this.setState({loading: false})
+            });
     };
 
     render() {
 
         let form = (
-            <div className={classes.ContactData}>
-                <h4>Enter your Contact Data</h4>
-                <form action="">
-                    <input className={classes.Input} type="text" name={'name'} placeholder={'Your Name'}/>
-                    <input className={classes.Input} type="email" name={'email'} placeholder={'example@mail.com'}/>
-                    <input className={classes.Input} type="text" name={'street'} placeholder={'Your Street'}/>
-                    <input className={classes.Input} type="text" name={'postalcode'} placeholder={'Your Postal Code'}/>
-                    <Button btnType={'Success'} clicked={this.orderHandler}>ORDER NOW</Button>
-                </form>
-            </div>
+            <form action="">
+                <input className={classes.Input} type="text" name={'name'} placeholder={'Your Name'}/>
+                <input className={classes.Input} type="email" name={'email'} placeholder={'example@mail.com'}/>
+                <input className={classes.Input} type="text" name={'street'} placeholder={'Your Street'}/>
+                <input className={classes.Input} type="text" name={'postalcode'} placeholder={'Your Postal Code'}/>
+                <Button btnType={'Success'} clicked={this.orderHandler}>ORDER NOW</Button>
+            </form>
         );
         if (this.state.loading) {
             form = <Spinner/>
         }
 
         return (
-            form
+            <div className={classes.ContactData}>
+                <h4>Enter your Contact Data</h4>
+                {form}
+            </div>
+
         )
 
     }
