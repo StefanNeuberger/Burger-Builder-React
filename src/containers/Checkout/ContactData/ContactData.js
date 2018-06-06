@@ -33,19 +33,33 @@ class contactData extends Component {
             elementConfig: configObj,
             value: valueString
         };
-    }
+    };
+
+    inputChangedHandler = (id, event) => {
+        const updatedOrderForm = {...this.state.orderForm};
+        const updatedFormElement = {...updatedOrderForm[id]};
+        updatedFormElement.value = event.target.value;
+        updatedOrderForm[id] = updatedFormElement;
+        this.setState({orderForm: updatedOrderForm});
+    };
 
     // event.preventDefault so that page does not get reloaded, which is default behaviour (sending request) of button inside form
     orderHandler = (event) => {
         event.preventDefault();
-        console.log(this.props);
-
         this.setState({loading: true});
         const date = dateFormat(new Date(), 'isoDateTime');
+
+        const orderData = {};
+        const formData = this.state.orderForm;
+        for (let key in formData) {
+            orderData[key] = formData[key].value;
+        }
+
         const order = {
             ingredients: this.props.ingredients,
             price: this.props.price,
             date: date,
+            orderData: orderData
         };
         axios.post('/orders.json', order)
             .then(response => {
@@ -68,16 +82,19 @@ class contactData extends Component {
             });
         }
 
-        console.log(formElementsArray)
-
         const formElements = formElementsArray.map(elem => {
-            return <Input key={elem.id} elementType={elem.elementType} elementConfig={elem.elementConfig} value={elem.value}/>
+            return <Input
+                key={elem.id}
+                elementType={elem.elementType}
+                elementConfig={elem.elementConfig}
+                value={elem.value}
+                changed={(event) => this.inputChangedHandler(elem.id, event)}/>
         });
 
         let form = (
-            <form action="">
+            <form onSubmit={this.orderHandler}>
                 {formElements}
-                <Button btnType={'Success'} clicked={this.orderHandler}>ORDER NOW</Button>
+                <Button btnType={'Success'}>ORDER NOW</Button>
             </form>
         );
         if (this.state.loading) {
