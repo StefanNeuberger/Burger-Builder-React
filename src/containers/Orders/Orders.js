@@ -45,7 +45,9 @@ class orders extends Component {
                     <Order
                         key={order.key}
                         date={date}
-                        time={time}/>
+                        time={time}
+                        price={order.price}
+                        ingredients={order.ingredients}/>
                 )
             });
         }

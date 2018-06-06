@@ -29,7 +29,7 @@ class contactData extends Component {
         const date = dateFormat(new Date(), 'isoDateTime');
         const order = {
             ingredients: this.props.ingredients,
-            price: this.state.totalPrice,
+            price: this.props.price,
             customer: {
                 name: 'Stefan Neuberger',
                 address: {
@@ -40,7 +40,7 @@ class contactData extends Component {
                 email: 'stef.neuberger@gmail.com'
             },
             deliveryMethod: 'fastest',
-            date: date
+            date: date,
         };
         axios.post('/orders.json', order)
             .then(response => {
