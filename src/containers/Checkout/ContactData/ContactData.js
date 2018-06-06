@@ -11,15 +11,29 @@ import dateFormat from 'dateformat';
 class contactData extends Component {
 
     state = {
-        name: '',
-        email: '',
-        address: {
-            street: '',
-            postalCode: ''
+        orderForm: {
+            name: this.createFormElement('input', {type: 'text', placeholder: 'Your Name'}, ''),
+            street: this.createFormElement('input', {type: 'text', placeholder: 'Your Street'}, ''),
+            zipCode: this.createFormElement('input', {type: 'text', placeholder: 'ZIP Code'}, ''),
+            country: this.createFormElement('input', {type: 'text', placeholder: 'Country'}, ''),
+            email: this.createFormElement('input', {type: 'email', placeholder: 'example@mail.com'}, ''),
+            deliveryMethod: this.createFormElement('select', {
+                options: [
+                    {value: 'fastest', displayValue: 'Fastest'},
+                    {value: 'cheapest', displayValue: 'Cheapest'}]
+            }, '')
         },
         loading: false,
         ordered: false
     };
+
+    createFormElement(typeString, configObj, valueString) {
+        return {
+            elementType: typeString,
+            elementConfig: configObj,
+            value: valueString
+        };
+    }
 
     // event.preventDefault so that page does not get reloaded, which is default behaviour (sending request) of button inside form
     orderHandler = (event) => {
@@ -31,16 +45,6 @@ class contactData extends Component {
         const order = {
             ingredients: this.props.ingredients,
             price: this.props.price,
-            customer: {
-                name: 'Stefan Neuberger',
-                address: {
-                    street: 'Teststreet 1',
-                    zipCode: '48587',
-                    country: 'Germany'
-                },
-                email: 'stef.neuberger@gmail.com'
-            },
-            deliveryMethod: 'fastest',
             date: date,
         };
         axios.post('/orders.json', order)
@@ -55,12 +59,24 @@ class contactData extends Component {
 
     render() {
 
+        const formElementsArray = [];
+
+        for (let key in this.state.orderForm) {
+            formElementsArray.push({
+                id: key,
+                ...this.state.orderForm[key]
+            });
+        }
+
+        console.log(formElementsArray)
+
+        const formElements = formElementsArray.map(elem => {
+            return <Input key={elem.id} elementType={elem.elementType} elementConfig={elem.elementConfig} value={elem.value}/>
+        });
+
         let form = (
             <form action="">
-                <Input inputtype="input" type="text" name={'name'} placeholder={'Your Name'}/>
-                <Input inputtype="input" type="email" name={'email'} placeholder={'example@mail.com'}/>
-                <Input inputtype="input" type="text" name={'street'} placeholder={'Your Street'}/>
-                <Input inputtype="input" type="text" name={'postalcode'} placeholder={'Your Postal Code'}/>
+                {formElements}
                 <Button btnType={'Success'} clicked={this.orderHandler}>ORDER NOW</Button>
             </form>
         );
