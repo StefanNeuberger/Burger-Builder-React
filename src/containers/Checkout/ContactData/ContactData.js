@@ -12,33 +12,91 @@ class contactData extends Component {
 
     state = {
         orderForm: {
-            name: this.createFormElement('input', {type: 'text', placeholder: 'Your Name'}, ''),
-            street: this.createFormElement('input', {type: 'text', placeholder: 'Your Street'}, ''),
-            zipCode: this.createFormElement('input', {type: 'text', placeholder: 'ZIP Code'}, ''),
-            country: this.createFormElement('input', {type: 'text', placeholder: 'Country'}, ''),
-            email: this.createFormElement('input', {type: 'email', placeholder: 'example@mail.com'}, ''),
-            deliveryMethod: this.createFormElement('select', {
-                options: [
-                    {value: 'fastest', displayValue: 'Fastest'},
-                    {value: 'cheapest', displayValue: 'Cheapest'}]
-            }, '')
+            name:
+                this.createFormElement(
+                    'input',
+                    {type: 'text', placeholder: 'Your Name'},
+                    '',
+                    {required: true},
+                    false),
+            street:
+                this.createFormElement(
+                    'input',
+                    {type: 'text', placeholder: 'Your Street'},
+                    '',
+                    {required: true},
+                    false),
+            zipCode:
+                this.createFormElement(
+                    'input',
+                    {type: 'text', placeholder: 'ZIP Code'},
+                    '',
+                    {required: true, minLength: 5},
+                    false),
+            country:
+                this.createFormElement(
+                    'input',
+                    {type: 'text', placeholder: 'Country'},
+                    '',
+                    {required: true},
+                    false),
+            email:
+                this.createFormElement(
+                    'input',
+                    {type: 'email', placeholder: 'example@mail.com'},
+                    '',
+                    {required: true},
+                    false),
+            deliveryMethod:
+                this.createFormElement(
+                    'select',
+                    {
+                        options: [
+                            {value: 'fastest', displayValue: 'Fastest'},
+                            {value: 'cheapest', displayValue: 'Cheapest'}]
+                    },
+                    '',
+                    {},
+                    false)
         },
         loading: false,
         ordered: false
     };
 
-    createFormElement(typeString, configObj, valueString) {
+    createFormElement(typeString, configObj, valueString, validationRulesObj, isValid) {
         return {
             elementType: typeString,
             elementConfig: configObj,
-            value: valueString
+            value: valueString,
+            validationRules: validationRulesObj,
+            valid: isValid
         };
+    };
+
+    checkValidity(value, rules) {
+        let isValid = true;
+
+        if (rules.required) {
+            isValid = value.trim() !== '' && isValid;
+        }
+
+        if (rules.minLength) {
+            isValid = value.trim().length >= rules.minLength && isValid;
+        }
+
+        if (rules.maxLength) {
+            isValid = value.trim().length <= rules.maxLength && isValid;
+        }
+
+        return isValid;
     };
 
     inputChangedHandler = (id, event) => {
         const updatedOrderForm = {...this.state.orderForm};
         const updatedFormElement = {...updatedOrderForm[id]};
         updatedFormElement.value = event.target.value;
+        updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validationRules);
+        console.log(updatedFormElement);
         updatedOrderForm[id] = updatedFormElement;
         this.setState({orderForm: updatedOrderForm});
     };
@@ -88,6 +146,7 @@ class contactData extends Component {
                 elementType={elem.elementType}
                 elementConfig={elem.elementConfig}
                 value={elem.value}
+                invalid={!elem.valid}
                 changed={(event) => this.inputChangedHandler(elem.id, event)}/>
         });
 
