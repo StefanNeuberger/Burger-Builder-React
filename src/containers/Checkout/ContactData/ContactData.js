@@ -66,7 +66,7 @@ class contactData extends Component {
                             {value: 'cheapest', displayValue: 'Cheapest'}]
                     },
                     '',
-                    null,
+                    {},
                     true,
                     false,
                     '')
@@ -116,7 +116,6 @@ class contactData extends Component {
         updatedFormElement.value = event.target.value;
         updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validationRules);
         updatedFormElement.touched = true;
-        console.log(updatedFormElement);
         updatedOrderForm[id] = updatedFormElement;
 
         let formIsValid = true;
@@ -129,7 +128,7 @@ class contactData extends Component {
 
     // event.preventDefault so that page does not get reloaded, which is default behaviour (sending request) of button inside form
     orderHandler = (event) => {
-        console.log(this.state.formIsValid);
+        event.preventDefault();
         event.preventDefault();
         this.setState({loading: true});
         const date = dateFormat(new Date(), 'isoDateTime');
