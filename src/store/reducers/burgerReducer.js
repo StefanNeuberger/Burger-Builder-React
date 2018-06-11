@@ -16,8 +16,7 @@ const initialState = {
         cheese: 0,
         meat: 0
     },
-    totalPrice: BASE_BURGER_PRICE,
-    purchasable: false
+    totalPrice: BASE_BURGER_PRICE
 };
 
 const reducer = (state = initialState, action) => {
@@ -26,7 +25,6 @@ const reducer = (state = initialState, action) => {
             let updatedPrice = (state.totalPrice * 10 + INGREDIENT_PRICES[action.ingredientName] * 10) / 10;
             return {
                 ...state,
-                purchasable: true,
                 totalPrice: updatedPrice,
                 ingredients: {
                     ...state.ingredients,
@@ -40,7 +38,6 @@ const reducer = (state = initialState, action) => {
                 return {
                     ...state,
                     totalPrice: updatedPrice,
-                    purchasable: updatedPrice > BASE_BURGER_PRICE,
                     ingredients: {
                         ...state.ingredients,
                         [action.ingredientName]: state.ingredients[action.ingredientName] - 1

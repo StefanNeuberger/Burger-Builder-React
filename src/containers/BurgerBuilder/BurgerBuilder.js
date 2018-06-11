@@ -23,23 +23,10 @@ import * as actionTypes from '../../store/actions';
 class BurgerBuilder extends Component {
 
     state = {
-        // ingredients: null,
-        // totalPrice: BASE_BURGER_PRICE,
-        // purchasable: false,
         purchasing: false,
         loading: false,
         error: false
     };
-
-    // componentDidMount() {
-    //     axios.get('/ingredients.json')
-    //         .then(res => {
-    //             this.setState({ingredients: res.data})
-    //         })
-    //         .catch(error => {
-    //             this.setState({error: true})
-    //         });
-    // };
 
     purchaseHandler = () => {
         this.setState({
@@ -66,35 +53,11 @@ class BurgerBuilder extends Component {
         })
     };
 
-    // updatePurchaseState = (ingredients) => {
-    //     const sum = Object.values(ingredients).reduce((acc, next) => acc + next);
-    //     const purchasable = sum > 0;
-    //     this.setState({
-    //         purchasable: purchasable
-    //     });
-    // };
-
-    // addIngredientHandler = (type) => {
-    //     const ingredients = {...this.state.ingredients};
-    //     ingredients[type]++;
-    //     const updatedPrice = (this.state.totalPrice * 10 + INGREDIENT_PRICES[type] * 10) / 10;
-    //     this.setState({
-    //         ingredients: ingredients,
-    //         totalPrice: updatedPrice
-    //     });
-    //     this.updatePurchaseState(ingredients);
-    // };
-
-    // removeIngredientHandler = (type) => {
-    //     const ingredients = {...this.state.ingredients};
-    //     ingredients[type]--;
-    //     const updatedPrice = (this.state.totalPrice * 10 - INGREDIENT_PRICES[type] * 10) / 10;
-    //     this.setState({
-    //         ingredients: ingredients,
-    //         totalPrice: updatedPrice
-    //     });
-    //     this.updatePurchaseState(ingredients);
-    // };
+    updatePurchaseState = (ingredients) => {
+        const sum = Object.values(ingredients).reduce((acc, next) => acc + next);
+        const purchasable = sum > 0;
+        return purchasable;
+    };
 
     render() {
 
@@ -119,7 +82,7 @@ class BurgerBuilder extends Component {
                         removedIngredient={this.props.onRemoveIngredient}
                         disabled={disabledInfo}
                         price={this.props.totalPrice}
-                        purchasable={this.props.purchasable}
+                        purchasable={this.updatePurchaseState(this.props.ingredients)}
                         ordering={this.purchaseHandler}
                     />
                 </Aux>
@@ -152,8 +115,7 @@ class BurgerBuilder extends Component {
 const mapStateToProps = (state) => {
     return {
         ingredients: state.ingredients,
-        totalPrice: state.totalPrice,
-        purchasable: state.purchasable
+        totalPrice: state.totalPrice
     }
 };
 
