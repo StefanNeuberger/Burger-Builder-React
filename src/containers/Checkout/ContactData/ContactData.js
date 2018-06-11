@@ -8,6 +8,8 @@ import axios from '../../../axios-orders';
 import classes from './ContactData.css';
 import dateFormat from 'dateformat';
 
+import {connect} from 'react-redux';
+
 class contactData extends Component {
 
     state = {
@@ -129,7 +131,6 @@ class contactData extends Component {
     // event.preventDefault so that page does not get reloaded, which is default behaviour (sending request) of button inside form
     orderHandler = (event) => {
         event.preventDefault();
-        event.preventDefault();
         this.setState({loading: true});
         const date = dateFormat(new Date(), 'isoDateTime');
 
@@ -141,7 +142,7 @@ class contactData extends Component {
 
         const order = {
             ingredients: this.props.ingredients,
-            price: this.props.price,
+            price: this.props.totalPrice,
             date: date,
             orderData: orderData
         };
@@ -200,4 +201,11 @@ class contactData extends Component {
     }
 }
 
-export default contactData;
+const mapStateToProps = (state) => {
+    return {
+        ingredients: state.ingredients,
+        totalPrice: state.totalPrice
+    }
+};
+
+export default connect(mapStateToProps)(contactData);
