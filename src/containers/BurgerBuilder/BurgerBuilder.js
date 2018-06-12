@@ -67,7 +67,6 @@ class BurgerBuilder extends Component {
         if (this.props.ingredients) {
             burger = (
                 <Aux>
-                    <button onClick={this.props.onPrintState}>PRINT STATE</button>
                     <Burger
                         ingredients={this.props.ingredients}/>
                     <BuildControls
