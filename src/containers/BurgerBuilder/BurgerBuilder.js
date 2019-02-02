@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import axios from '../../axios-orders';
 
 import Aux from '../../hoc/Aux/Aux';
@@ -9,8 +9,8 @@ import Modal from '../../components/UI/Modal/Modal';
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 
-import {connect} from 'react-redux';
-import * as actionTypes from '../../store/actions';
+import { connect } from 'react-redux';
+import * as actionCreators from '../../store/actions';
 
 // const BASE_BURGER_PRICE = 4;
 // const INGREDIENT_PRICES = {
@@ -54,7 +54,7 @@ class BurgerBuilder extends Component {
 
     render() {
 
-        const disabledInfo = {...this.props.ingredients};
+        const disabledInfo = { ...this.props.ingredients };
 
         for (let key in disabledInfo) {
             disabledInfo[key] = disabledInfo[key] <= 0;
@@ -62,13 +62,13 @@ class BurgerBuilder extends Component {
 
         let orderSummary = null;
 
-        let burger = this.state.error ? <p style={{textAlign: 'center'}}>Ingredients can´t be loaded!</p> : <Spinner/>;
+        let burger = this.state.error ? <p style={{ textAlign: 'center' }}>Ingredients can´t be loaded!</p> : <Spinner />;
 
         if (this.props.ingredients) {
             burger = (
                 <Aux>
                     <Burger
-                        ingredients={this.props.ingredients}/>
+                        ingredients={this.props.ingredients} />
                     <BuildControls
                         addedIngredient={this.props.onAddIngredient}
                         removedIngredient={this.props.onRemoveIngredient}
@@ -113,9 +113,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onAddIngredient: (ingredientName) => dispatch({type: actionTypes.ADD_INGREDIENT, ingredientName: ingredientName}),
-        onRemoveIngredient: (ingredientName) => dispatch({type: actionTypes.REMOVE_INGREDIENT, ingredientName: ingredientName}),
-        onPrintState: () => dispatch({type: actionTypes.PRINT_STATE})
+        // onAddIngredient: (ingredientName) => dispatch({type: actionTypes.ADD_INGREDIENT, ingredientName: ingredientName}),
+        onAddIngredient: (ingredientName) => dispatch(actionCreators.addIngredient(ingredientName)),
+        onRemoveIngredient: (ingredientName) => dispatch(actionCreators.removeIngredient(ingredientName)),
+        // onRemoveIngredient: (ingredientName) => dispatch({ type: actionTypes.REMOVE_INGREDIENT, ingredientName: ingredientName }),
+        // onPrintState: () => dispatch({ type: actionTypes.PRINT_STATE })
     }
 };
 

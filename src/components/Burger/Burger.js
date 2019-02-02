@@ -6,15 +6,15 @@ const burger = (props) => {
 
     let orderedIngredients = Object.keys(props.ingredients)
         .map((key) => {
-           return (
-               [...Array(props.ingredients[key])]
-           ).map((_, i) => {
-              return (
-                  <BurgerIngredient key={key + i} type={key}/>
-              )
-           });
+            return (
+                [...Array(props.ingredients[key])]
+            ).map((_, index) => {
+                return (
+                    <BurgerIngredient key={key + index} type={key}/>
+                )
+            })
         }).reduce((acc, next) => {
-            return acc.concat(next);
+            return acc.concat(next)
         }, []);
 
     if (orderedIngredients.length === 0) {

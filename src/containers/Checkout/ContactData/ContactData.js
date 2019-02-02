@@ -67,7 +67,7 @@ class contactData extends Component {
                             {value: 'fastest', displayValue: 'Fastest'},
                             {value: 'cheapest', displayValue: 'Cheapest'}]
                     },
-                    '',
+                    'cheapest',
                     {},
                     true,
                     false,
@@ -101,7 +101,8 @@ class contactData extends Component {
             }
 
             if (rules.minLength) {
-                isValid = value.trim().length >= rules.minLength && isValid;
+                if (value.trim().length < rules.minLength)
+                  return false;
             }
 
             if (rules.maxLength) {
@@ -114,11 +115,26 @@ class contactData extends Component {
 
     inputChangedHandler = (id, event) => {
         const updatedOrderForm = {...this.state.orderForm};
-        const updatedFormElement = {...updatedOrderForm[id]};
+
+        const updatedFormElement = {
+            ...updatedOrderForm[id],
+        };
         updatedFormElement.value = event.target.value;
         updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validationRules);
         updatedFormElement.touched = true;
         updatedOrderForm[id] = updatedFormElement;
+
+
+        /*
+        const updatedFormElement = {
+            ...updatedOrderForm[id],
+            value: event.target.value,
+            valid: this.checkValidity(updatedFormElement.value, updatedFormElement.validationRules),
+            touched: true
+        };
+        */
+
+
 
         let formIsValid = true;
         for (let inputId in updatedOrderForm) {
