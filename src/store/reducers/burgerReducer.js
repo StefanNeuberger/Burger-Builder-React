@@ -34,6 +34,7 @@ const reducer = (state = initialState, action) => {
           [action.ingredientName]: state.ingredients[action.ingredientName] + 1
         }
       };
+    //test
     case actionTypes.REMOVE_INGREDIENT:
       updatedPrice = state.totalPrice;
       if (state.ingredients[action.ingredientName] > 0) {
